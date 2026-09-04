@@ -1,0 +1,16 @@
+{
+  "name": "HelloWorld",
+  "install": "npm install",
+  "terminals": [
+    {
+      "name": "web",
+      "command": "npm start"
+    }
+  ],
+  "ports": [
+    {
+      "name": "web",
+      "port": 3000
+    }
+  ]
+}

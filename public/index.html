@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HelloWorld</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        --bg: #0f172a;
+        --card: #1e293b;
+        --accent: #38bdf8;
+        --text: #e2e8f0;
+        --muted: #94a3b8;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        background: radial-gradient(circle at top, #1e293b, var(--bg));
+        color: var(--text);
+      }
+      .card {
+        background: var(--card);
+        padding: 2.5rem 3rem;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+        text-align: center;
+        max-width: 420px;
+        width: calc(100% - 2rem);
+      }
+      h1 {
+        margin: 0 0 0.5rem;
+        font-size: 2rem;
+      }
+      #message {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--accent);
+        min-height: 2rem;
+        margin: 1.25rem 0;
+      }
+      p {
+        color: var(--muted);
+        margin: 0 0 1.5rem;
+      }
+      .row {
+        display: flex;
+        gap: 0.5rem;
+      }
+      input,
+      button {
+        font-size: 1rem;
+        padding: 0.65rem 0.9rem;
+        border-radius: 10px;
+        border: 1px solid #334155;
+      }
+      input {
+        flex: 1;
+        background: #0f172a;
+        color: var(--text);
+      }
+      button {
+        background: var(--accent);
+        color: #0f172a;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+      }
+      button:hover {
+        opacity: 0.9;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <h1>HelloWorld</h1>
+      <p>A minimal web app served by Express.</p>
+      <div id="message">…</div>
+      <div class="row">
+        <input id="name" type="text" placeholder="Enter a name" aria-label="Name" />
+        <button id="greet">Greet</button>
+      </div>
+    </main>
+    <script>
+      const messageEl = document.getElementById("message");
+      const nameEl = document.getElementById("name");
+      const button = document.getElementById("greet");
+
+      async function greet(name) {
+        const url = name ? `/api/hello?name=${encodeURIComponent(name)}` : "/api/hello";
+        try {
+          const res = await fetch(url);
+          const data = await res.json();
+          messageEl.textContent = data.message;
+        } catch (err) {
+          messageEl.textContent = "Failed to reach the server.";
+        }
+      }
+
+      button.addEventListener("click", () => greet(nameEl.value));
+      nameEl.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") greet(nameEl.value);
+      });
+
+      greet();
+    </script>
+  </body>
+</html>
